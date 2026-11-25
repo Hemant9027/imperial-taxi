@@ -1,0 +1,179 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Imperial Taxi Services — design tokens
+   Surface: screenprinted travel poster (4 flat inks) on warm card stock.
+   --------------------------------------------------------------------------- */
+@theme {
+  --font-display: "Fraunces", "Georgia", "Times New Roman", serif;
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  --color-ink: #052a2e;
+  --color-abyss: #031b1e;
+  --color-ocean: #0c5c57;
+  --color-oceanlight: #17807a;
+  --color-sand: #f4e7d3;
+  --color-sanddeep: #e7d3b3;
+  --color-cream: #fff9f0;
+  --color-coral: #ff6a45;
+  --color-coraldark: #e24e2c;
+  --color-gold: #f5b942;
+  --color-mute: #6f6353;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-sand);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  .display {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  section[id],
+  div[id] {
+    scroll-margin-top: 5.5rem;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-coral);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+
+  ::selection {
+    background: var(--color-coral);
+    color: var(--color-ink);
+  }
+}
+
+/* --- typography helpers -------------------------------------------------- */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.lede {
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+
+@media (min-width: 768px) {
+  .lede {
+    font-size: 1.1875rem;
+  }
+}
+
+/* --- poster texture ------------------------------------------------------ */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+}
+
+.halftone {
+  background-image: radial-gradient(
+    currentColor 1px,
+    transparent 1.2px
+  );
+  background-size: 7px 7px;
+}
+
+/* --- die-cut fare ticket ------------------------------------------------- */
+.perf-x {
+  background-image: radial-gradient(
+    circle at center,
+    var(--color-sand) 0 5px,
+    transparent 5.5px
+  );
+  background-size: 18px 18px;
+  background-repeat: repeat-x;
+  background-position: center;
+}
+
+.perf-y {
+  background-image: radial-gradient(
+    circle at center,
+    var(--color-sand) 0 5px,
+    transparent 5.5px
+  );
+  background-size: 18px 18px;
+  background-repeat: repeat-y;
+  background-position: center;
+}
+
+.stamp {
+  border: 2px dashed currentColor;
+  border-radius: 4px;
+  transform: rotate(-2.5deg);
+}
+
+/* native select with a poster-style chevron */
+.select-chevron {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 2.6rem;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%23052a2e'%20stroke-width='2.5'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='m6%209%206%206%206-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.85rem center;
+  background-size: 15px 15px;
+}
+
+/* --- scroll reveal ------------------------------------------------------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 0.68, 0.24, 1),
+    transform 0.7s cubic-bezier(0.22, 0.68, 0.24, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
